@@ -1,14 +1,14 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 import joblib
 from pydantic import BaseModel
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
-
+import os, uvicorn
 
 app = FastAPI()
 
-
-class sepsis_features(BaseModel):
+# Define the input data model
+class SepsisFeatures(BaseModel):
     PRG: float
     PL: float
     PR: float
@@ -19,28 +19,6 @@ class sepsis_features(BaseModel):
     Age: float
     Insurance: int
 
-
 @app.get('/')
 def status_check():
-    return {"Status": "Api is online...."}
-
-
-forest = joblib.load('Models/tuned_rfc_model.joblib')
-xgb = joblib.load('Models/tuned_xgb_model.joblib')
-label_encoder = LabelEncoder()
-
-
-@app.post('/forest_prediction')
-def forest_prediction(data: sepsis_features):
-
-    df = pd.DataFrame([data.model_dump()])
-
-    prediction  = forest.predict(df)
-
-    prediction = int(prediction[0])
-
-    prediction = label_encoder.inverse_transform(prediction)[0]
-
-    return {"Prediction": prediction}
-
-    
+    return {"Welcome to the sepsis prediction API"}
