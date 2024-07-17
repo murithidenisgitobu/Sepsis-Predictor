@@ -63,6 +63,11 @@ if submit_button:
 
     if response.status_code == 200:
         prediction = response.json()['Sepsis Prediction']
-        st.success(f'The patient tested {prediction} for sepsis')
+
+        if prediction == 'Positive':
+            st.success(f'The patient will develop sepsis')
+        
+        else:
+            st.success(f'The patient will not develop sepsis')
     else:
         st.error(f'Error: {response.json()["detail"]}')
