@@ -58,6 +58,7 @@ class SepsisFeatures(BaseModel):
 def status_check():
     return {"Welcome to the sepsis prediction API"}
 
+
 # Endpoint for predicting sepsis using Random Forest model
 @app.post("/random_forest_prediction")
 def predict_sepsis(data: SepsisFeatures):
@@ -76,6 +77,7 @@ def predict_sepsis(data: SepsisFeatures):
     except Exception as e:
         logger.error(f"Prediction error: {str(e)}")
         raise HTTPException(status_code=500, detail="Prediction failed")
+    
 
 # Endpoint for predicting sepsis using XGBoost model
 @app.post("/xgboost_prediction")
