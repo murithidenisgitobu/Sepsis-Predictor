@@ -59,7 +59,7 @@ def status_check():
     return {"Welcome to the sepsis prediction API"}
 
 # Endpoint for predicting sepsis using Random Forest model
-@app.post("/forest_prediction")
+@app.post("/random_forest_prediction")
 def predict_sepsis(data: SepsisFeatures):
     try:
         # Create a DataFrame from the input data
@@ -78,7 +78,7 @@ def predict_sepsis(data: SepsisFeatures):
         raise HTTPException(status_code=500, detail="Prediction failed")
 
 # Endpoint for predicting sepsis using XGBoost model
-@app.post("/xgb_prediction")
+@app.post("/xgboost_prediction")
 def predict_sepsis_xgb(data: SepsisFeatures):
     try:
         df = pd.DataFrame([data.model_dump()])
