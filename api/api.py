@@ -27,9 +27,9 @@ Output feature:
 """
 
 # Load Models
-forest = joblib.load("../toolkit/forest.joblib")
-xgb = joblib.load("../toolkit/xgb.joblib")
-label_encoder = joblib.load("../toolkit/encoder.joblib")
+forest = joblib.load("../api/toolkit/forest.joblib")
+xgb = joblib.load("../api/toolkit/xgb.joblib")
+label_encoder = joblib.load("../api/toolkit/encoder.joblib")
 
 # Configure Logs
 logging.basicConfig(level=logging.INFO)

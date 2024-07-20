@@ -1,19 +1,24 @@
-# Specify the version of the Docker Compose file format
-version: '3'
+version: '3.8'
 
-# Define the services (containers) to be run
 services:
   # Define the 'api' service
   api:
     # Build the 'api' service using the Dockerfile in the './api' directory
     build:
-      context: './api'
+      context: .
+      dockerfile: api/Dockerfile
+    ports:
+      # Map port 8000 on the host to port 80 on the 'api' container
+      - '8000:80'
+    working_dir: /app/api
 
   # Define the 'client' service
   client:
     # Build the 'client' service using the Dockerfile in the './frontend' directory
     build:
-      context: './frontend'
+      context: .
+      dockerfile: frontend/Dockerfile
     ports:
       # Map port 3000 on the host to port 8501 on the 'client' container
       - '3000:8501'
+    working_dir: /app/frontend

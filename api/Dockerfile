@@ -1,18 +1,20 @@
 # Use the official Python 3.10.11 image as the base image
 FROM python:3.10.11
 
-# Copy the requirements.txt file to the /tmp directory in the container
-COPY requirements.txt /tmp/requirements.txt
+# Set the working directory to /app/api
+WORKDIR /app/api
+
+# Copy the requirements.txt file from the api directory to the /tmp directory in the container
+COPY api/requirements.txt /tmp/requirements.txt
 
 # Install the Python dependencies specified in requirements.txt
-# The --timeout option is set to 300000 seconds to prevent timeouts during installation
-RUN python -m pip install --timeout 300000 -r /tmp/requirements.txt
+RUN python -m pip install --no-cache-dir --timeout 300000 -r /tmp/requirements.txt
 
-# Copy the entire current directory (.) to the /app directory in the container
-COPY . /app
+# Copy the toolkit directory into the container
+COPY api/toolkit /app/toolkit
 
-# Set the working directory to /app
-WORKDIR /app
+# Copy the entire api directory to the /app/api directory in the container
+COPY api /app/api
 
 # Expose port 80 for the application
 EXPOSE 80

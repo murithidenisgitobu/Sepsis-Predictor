@@ -1,21 +1,20 @@
-# Use the official Python 3.10.11 image as the base image
-FROM python:3.10.11
+# Use the official Python 3.10 image as the base image
+FROM python:3.10
 
-# Copy the requirements.txt file to the /tmp directory in the container
-COPY requirements.txt /tmp/requirements.txt
+# Set the working directory to /app/frontend
+WORKDIR /app/frontend
+
+# Copy the requirements.txt file to the working directory
+COPY frontend/requirements.txt /app/frontend/requirements.txt
 
 # Install the Python dependencies specified in requirements.txt
-# The --timeout option is set to 300000 seconds to prevent timeouts during installation
-RUN python -m pip install --timeout 300000 -r /tmp/requirements.txt
+RUN python -m pip install --no-cache-dir --timeout 300000 -r /app/frontend/requirements.txt
 
-# Copy the entire current directory (.) to the /app directory in the container
-COPY . /app
+# Copy the entire frontend directory into the working directory
+COPY frontend /app/frontend
 
-# Set the working directory to /app
-WORKDIR /app
+# Expose port 8501 for the Streamlit application
+EXPOSE 8501
 
-# Expose port 80 for the application
-EXPOSE 3000
-
-# Command to run the application using Uvicorn, specifying the host and port
-CMD ["streamlit", "run", "main.py", "0.0.0.0", "--server.port=8501"]
+# Command to run the Streamlit application on port 8501
+CMD ["streamlit", "run", "main.py", "--server.port=8501", "--server.address=0.0.0.0"]
